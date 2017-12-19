@@ -1,13 +1,12 @@
-name: deeplook2
+name: deeplook
 channels:
     - conda-forge
 dependencies:
-    - python=2.7
+    - python=3.6
     - pip
     - numpy
     - future
     - dask
-    - fatiando
     - matplotlib
     - pytest
     - pytest-cov
