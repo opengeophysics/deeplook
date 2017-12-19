@@ -1,0 +1,5 @@
+[run]
+omit =
+    */tests/*
+    */_version.py
+    *gmt/__init__.py
