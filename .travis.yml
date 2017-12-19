@@ -29,18 +29,18 @@ matrix:
     include:
         - os: linux
           env:
-              - PYTHON=3.5
-        - os: linux
-          env:
-              - PYTHON=3.6
-              - COVERAGE=true
-        - os: linux
-          env:
               - PYTHON=2.7
               - COVERAGE=true
               - BUILD_DOCS=true
               - DEPLOY_DOCS=true
               - DEPLOY_PYPI=true
+        - os: linux
+          env:
+              - PYTHON=3.5
+        - os: linux
+          env:
+              - PYTHON=3.6
+              - COVERAGE=true
 
 before_install:
     # Get Miniconda from Continuum
