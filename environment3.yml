@@ -1,4 +1,4 @@
-name: deeplook
+name: deeplook3
 channels:
     - conda-forge
 dependencies:
