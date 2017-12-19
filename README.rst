@@ -17,7 +17,7 @@ Deeplook
 .. image:: https://img.shields.io/codecov/c/github/fatiando/deeplook/master.svg?style=flat-square
     :alt: Test coverage status
     :target: https://codecov.io/gh/fatiando/deeplook
-.. image:: https://img.shields.io/codeclimate/github/fatiando/deeplook.svg?style=flat-square
+.. image:: https://img.shields.io/codeclimate/maintainability/fatiando/deeplook.svg?style=flat-square
     :alt: Code quality status
     :target: https://codeclimate.com/github/fatiando/deeplook
 .. image:: https://img.shields.io/codacy/grade/e73169dcb8454b3bb0f6cc5389b228b4.svg?style=flat-square&label=codacy
