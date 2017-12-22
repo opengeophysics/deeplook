@@ -17,8 +17,7 @@ ratings:
 
 exclude_paths:
     - "versioneer.py"
-    - "gmt/_version.py"
+    - "deeplook/_version.py"
     - "doc/**/*"
     - "ci/*"
-    - "gmt/tests/baseline/*"
-    - "gmt/tests/data/*"
+    - "deeplook/tests/data/*"
