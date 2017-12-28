@@ -12,3 +12,10 @@ API Reference
 .. raw:: html
 
     </div>
+    <div class="api-module">
+
+.. include:: deeplook.backend.rst
+
+.. raw:: html
+
+    </div>

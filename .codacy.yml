@@ -1,0 +1,6 @@
+exclude_paths:
+  - doc/**
+  - ci/**/*
+  - **/_version.py
+  - versioneer.py
+  - **/tests/data

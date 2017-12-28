@@ -5,6 +5,7 @@ dependencies:
     - python=2.7
     - pip
     - numpy
+    - scipy
     - future
     - dask
     - fatiando
