@@ -1,4 +1,4 @@
-The ``{{ fullname }}`` module
+``{{ fullname }}``
 {% for i in range(fullname|length + 15) %}-{% endfor %}
 
 .. raw:: html
