@@ -9,6 +9,14 @@ BUILDDIR      = _build
 # Internal variables.
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees  $(SPHINXOPTS) .
 
+PYTHON_VERSION = $(shell python -c "import sys; v=sys.version_info.major; sys.stdout.write(str(v))")
+PORT = 8010
+ifeq ($(PYTHON_VERSION), 2)
+	HTTP_SERVER = "SimpleHTTPServer"
+else
+	HTTP_SERVER = "http.server"
+endif
+
 .PHONY: help clean html linkcheck doctest api
 
 all: html
@@ -57,4 +65,4 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 serve:
-	cd $(BUILDDIR)/html && python -m http.server 8010
+	cd $(BUILDDIR)/html && python -m $(HTTP_SERVER) $(PORT)
