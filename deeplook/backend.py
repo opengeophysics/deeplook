@@ -1,3 +1,4 @@
+# pylint: disable=redefined-builtin
 """
 Linear algebra backend for numpy and scipy.sparse.
 
@@ -117,6 +118,58 @@ def diagonal(matrix):
     return diag
 
 
+def abs(array):
+    """
+    Calculate the absolute value of an array.
+
+    Parameters
+    ----------
+    * array : nd array
+        The array with integer or floating point values.
+
+    Returns
+    -------
+    * abs_array : nd array
+        The element-wise absolute value of the array.
+
+    Examples
+    --------
+
+    >>> import numpy as np
+    >>> abs(np.array([1, -2, 3, -4]))
+    array([1, 2, 3, 4])
+    """
+    return np.abs(array)
+
+
+def norm(array, ord=2):
+    """
+    Calculate the Nth order norm of the array.
+
+    Parameters
+    ----------
+    array : nd array
+        The array.
+    ord : int
+        The order of the norm.
+
+    Returns
+    -------
+    norm : float
+        The Nth order norm of the array.
+
+    Examples
+    --------
+
+    >>> import numpy as np
+    >>> x = np.array([2, 2, 2, 2])
+    >>> norm(x, ord=2)
+    4.0
+
+    """
+    return np.linalg.norm(array, ord=ord)
+
+
 def fudge(array, factor):
     """
     Replace small values in an array with a fudge factor.
@@ -146,7 +199,7 @@ def fudge(array, factor):
              1.00000000e-10,   1.00000000e-10])
 
     """
-    array[np.abs(array) < factor] = factor
+    array[abs(array) < factor] = factor
     return array
 
 
