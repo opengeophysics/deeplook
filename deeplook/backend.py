@@ -68,12 +68,12 @@ def dot(left, right):
     >>> spmatrix = diags([4, 5], 0)
     >>> spdot = dot(spmatrix, right)
     >>> spdot
-    array([[ 12.,   0.],
-           [  0.,  15.]])
+    array([[12.,  0.],
+           [ 0., 15.]])
     >>> spdot2 = dot(left, spmatrix)
     >>> spdot2
-    array([[  8.,   0.],
-           [  0.,  10.]])
+    array([[ 8.,  0.],
+           [ 0., 10.]])
 
     """
     if sp.sparse.issparse(right):
@@ -108,7 +108,7 @@ def diagonal(matrix):
     >>> from scipy.sparse import diags
     >>> spmatrix = diags([4, 10], 0)
     >>> diagonal(spmatrix)
-    array([  4.,  10.])
+    array([ 4., 10.])
 
     """
     if sp.sparse.issparse(matrix):
@@ -195,8 +195,7 @@ def fudge(array, factor):
     >>> import numpy as np
     >>> x = np.array([1, 2, 3, 1e-15, -1e-12])
     >>> fudge(x, factor=1e-10)
-    array([  1.00000000e+00,   2.00000000e+00,   3.00000000e+00,
-             1.00000000e-10,   1.00000000e-10])
+    array([1.e+00, 2.e+00, 3.e+00, 1.e-10, 1.e-10])
 
     """
     array[abs(array) < factor] = factor

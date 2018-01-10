@@ -32,8 +32,6 @@ matrix:
               - PYTHON=2.7
               - COVERAGE=true
               - BUILD_DOCS=true
-              - DEPLOY_DOCS=true
-              - DEPLOY_PYPI=true
         - os: linux
           env:
               - PYTHON=3.5
@@ -41,6 +39,9 @@ matrix:
           env:
               - PYTHON=3.6
               - COVERAGE=true
+              - BUILD_DOCS=true
+              - DEPLOY_DOCS=true
+              - DEPLOY_PYPI=true
 
 before_install:
     # Get Miniconda from Continuum
