@@ -14,6 +14,13 @@ API Reference
     </div>
     <div class="api-module">
 
+.. include:: deeplook.optimization.rst
+
+.. raw:: html
+
+    </div>
+    <div class="api-module">
+
 .. include:: deeplook.backend.rst
 
 .. raw:: html

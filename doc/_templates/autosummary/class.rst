@@ -3,25 +3,9 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
-
-{% block methods_documentation %}
-{% if methods %}
-
-.. raw:: html
-
-    <hr>
-
-Methods Documentation
----------------------
-
-{% for item in methods %}
-{% if item != '__init__' %}
-.. automethod:: {{ objname }}.{{ item }}
-{% endif %}
-{% endfor %}
-
-{% endif %}
-{% endblock %}
+    :members:
+    :inherited-members:
+    :special-members: __call__
 
 .. raw:: html
 
