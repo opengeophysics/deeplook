@@ -1,0 +1,508 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    
+        <title>deeplook.backend &mdash; Deeplook</title>
+    
+
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Deeplook" href="../../index.html"/>
+        <link rel="up" title="deeplook" href="../deeplook.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href="../../index.html"><h2 class="sidebar-title">Deeplook</h2></a>
+
+    
+        
+        
+            <div class="version">
+                dev
+            </div>
+        
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">External links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CONTRIBUTING.md"><i class="fa fa-users fa-fw"></i> Contributing</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CODE_OF_CONDUCT.md"><i class="fa fa-gavel fa-fw"></i> Code of Conduct</a></li>
+            
+                <li class="toctree-l1"><a href="https://gitter.im/fatiando/deeplook"><i class="fa fa-comment fa-fw"></i> Contact</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Deeplook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../deeplook.html">deeplook</a> &raquo;</li>
+        
+      <li>deeplook.backend</li>
+    
+    
+    <li class="source-link">
+        
+        
+    </li>
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deeplook.backend</h1><div class="highlight"><pre>
+<span></span><span class="c1"># pylint: disable=redefined-builtin</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Linear algebra backend for numpy and scipy.sparse.</span>
+
+<span class="sd">Delegates to the correct library depending on data type and flags.</span>
+<span class="sd">Allows you to mix numpy arrays and scipy sparse matrices without extra effort.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse.linalg</span> <span class="k">as</span> <span class="nn">spla</span>
+
+
+<div class="viewcode-block" id="multiply"><a class="viewcode-back" href="../../api/deeplook.backend.multiply.html#deeplook.backend.multiply">[docs]</a><span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise multiplication of two arrays.</span>
+
+<span class="sd">    Numpy broadcasting rules apply.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * left, right : nd arrays</span>
+<span class="sd">        The arrays which will be multiplied.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * prod : nd array</span>
+<span class="sd">        The result of the element-wise multiplication.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">left</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">right</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">*</span><span class="n">right</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="dot"><a class="viewcode-back" href="../../api/deeplook.backend.dot.html#deeplook.backend.dot">[docs]</a><span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Take the dot product between two arrays.</span>
+
+<span class="sd">    Can handle numpy arrays and scipy.sparse matrices.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * left, right : 1 or 2d arrays</span>
+<span class="sd">        The vectors/matrices of which to take the dot product.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * prod : 1 or 2d array</span>
+<span class="sd">        The dot product of *left* and *right*</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; left = np.array([[2, 0], [0, 2]])</span>
+<span class="sd">    &gt;&gt;&gt; right = np.array([[3, 0], [0, 3]])</span>
+<span class="sd">    &gt;&gt;&gt; dot(left, right)</span>
+<span class="sd">    array([[6, 0],</span>
+<span class="sd">           [0, 6]])</span>
+<span class="sd">    &gt;&gt;&gt; # Mix in a sparse matrix</span>
+<span class="sd">    &gt;&gt;&gt; from scipy.sparse import diags</span>
+<span class="sd">    &gt;&gt;&gt; spmatrix = diags([4, 5], 0)</span>
+<span class="sd">    &gt;&gt;&gt; spdot = dot(spmatrix, right)</span>
+<span class="sd">    &gt;&gt;&gt; spdot</span>
+<span class="sd">    array([[12.,  0.],</span>
+<span class="sd">           [ 0., 15.]])</span>
+<span class="sd">    &gt;&gt;&gt; spdot2 = dot(left, spmatrix)</span>
+<span class="sd">    &gt;&gt;&gt; spdot2</span>
+<span class="sd">    array([[ 8.,  0.],</span>
+<span class="sd">           [ 0., 10.]])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">right</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">*</span><span class="n">right</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="diagonal"><a class="viewcode-back" href="../../api/deeplook.backend.diagonal.html#deeplook.backend.diagonal">[docs]</a><span class="k">def</span> <span class="nf">diagonal</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the main diagonal of a matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * matrix : 2d-array</span>
+<span class="sd">        The matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * diag : 1d-array</span>
+<span class="sd">        A numpy array with the diagonal of the matrix.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; matrix = np.array([[2, 0], [0, 5]])</span>
+<span class="sd">    &gt;&gt;&gt; diagonal(matrix)</span>
+<span class="sd">    array([2, 5])</span>
+<span class="sd">    &gt;&gt;&gt; # With a sparse matrix</span>
+<span class="sd">    &gt;&gt;&gt; from scipy.sparse import diags</span>
+<span class="sd">    &gt;&gt;&gt; spmatrix = diags([4, 10], 0)</span>
+<span class="sd">    &gt;&gt;&gt; diagonal(spmatrix)</span>
+<span class="sd">    array([ 4., 10.])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+        <span class="n">diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">diagonal</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">diag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">diag</span></div>
+
+
+<div class="viewcode-block" id="abs"><a class="viewcode-back" href="../../api/deeplook.backend.abs.html#deeplook.backend.abs">[docs]</a><span class="k">def</span> <span class="nf">abs</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the absolute value of an array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * array : nd array</span>
+<span class="sd">        The array with integer or floating point values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * abs_array : nd array</span>
+<span class="sd">        The element-wise absolute value of the array.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; abs(np.array([1, -2, 3, -4]))</span>
+<span class="sd">    array([1, 2, 3, 4])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">array</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="norm"><a class="viewcode-back" href="../../api/deeplook.backend.norm.html#deeplook.backend.norm">[docs]</a><span class="k">def</span> <span class="nf">norm</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the Nth order norm of the array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    array : nd array</span>
+<span class="sd">        The array.</span>
+<span class="sd">    ord : int</span>
+<span class="sd">        The order of the norm.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    norm : float</span>
+<span class="sd">        The Nth order norm of the array.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; x = np.array([2, 2, 2, 2])</span>
+<span class="sd">    &gt;&gt;&gt; norm(x, ord=2)</span>
+<span class="sd">    4.0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="nb">ord</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fudge"><a class="viewcode-back" href="../../api/deeplook.backend.fudge.html#deeplook.backend.fudge">[docs]</a><span class="k">def</span> <span class="nf">fudge</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replace small values in an array with a fudge factor.</span>
+
+<span class="sd">    Any element whose absolute value is smaller than *factor* will be replaced</span>
+<span class="sd">    by factor.</span>
+
+<span class="sd">    Operates **in memory**, so the original values will be lost.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    array : nd array</span>
+<span class="sd">        Any array that supports numpy-style fancy indexing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fudged_array : nd array</span>
+<span class="sd">        The array with fudge factor applied.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; x = np.array([1, 2, 3, 1e-15, -1e-12])</span>
+<span class="sd">    &gt;&gt;&gt; fudge(x, factor=1e-10)</span>
+<span class="sd">    array([1.e+00, 2.e+00, 3.e+00, 1.e-10, 1.e-10])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">array</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor</span>
+    <span class="k">return</span> <span class="n">array</span></div>
+
+
+<div class="viewcode-block" id="inv"><a class="viewcode-back" href="../../api/deeplook.backend.inv.html#deeplook.backend.inv">[docs]</a><span class="k">def</span> <span class="nf">inv</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the inverse of a matrix.</span>
+
+<span class="sd">    Uses the standard :func:`scipy.linalg.inv` if *matrix* is dense.</span>
+<span class="sd">    If it is sparse (from :mod:`scipy.sparse`) then will use</span>
+<span class="sd">    :func:`scipy.sparse.linalg.inv`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * matrix : 2d-array</span>
+<span class="sd">        A dense numpy array or scipy.sparse matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * inverse : 2d-array</span>
+<span class="sd">        The inverse of *matrix*</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="solve"><a class="viewcode-back" href="../../api/deeplook.backend.solve.html#deeplook.backend.solve">[docs]</a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">vector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve a linear system.</span>
+
+<span class="sd">    Uses the standard :func:`scipy.linalg.solve` if both *matrix* and *vector*</span>
+<span class="sd">    are dense.</span>
+
+<span class="sd">    If any of the two is sparse (from :mod:`scipy.sparse`) then will use the</span>
+<span class="sd">    Conjugate Gradient Method (:func:`scipy.sparse.linalg.cgs`).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * matrix : 2d-array</span>
+<span class="sd">        The matrix defining the linear system.</span>
+<span class="sd">    * vector : 1d or 2d-array</span>
+<span class="sd">        The right-side vector of the system.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    * solution : 1d or 2d-array</span>
+<span class="sd">        The solution of the linear system.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
+        <span class="n">solution</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">spla</span><span class="o">.</span><span class="n">cgs</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">solution</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Leonardo Uieda.
+      Last updated on Jan 10, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

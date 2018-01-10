@@ -1,0 +1,11 @@
+deeplook\.backend\.dot
+======================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: dot
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>

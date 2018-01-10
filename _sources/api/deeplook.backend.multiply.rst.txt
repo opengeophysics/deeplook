@@ -1,0 +1,11 @@
+deeplook\.backend\.multiply
+===========================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: multiply
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>
