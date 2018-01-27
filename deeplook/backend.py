@@ -228,7 +228,7 @@ def inv(matrix):
     return result
 
 
-def solve(matrix, vector):
+def solve(matrix, vector, sym_pos=False):
     """
     Solve a linear system.
 
@@ -244,6 +244,9 @@ def solve(matrix, vector):
         The matrix defining the linear system.
     * vector : 1d or 2d-array
         The right-side vector of the system.
+    * sym_pos : bool
+        If the matrix is not sparse and is symmetric positive definite, use
+        ``sym_pos=True``.
 
     Returns
     -------
@@ -254,5 +257,5 @@ def solve(matrix, vector):
     if sp.sparse.issparse(matrix) or sp.sparse.issparse(vector):
         solution, _ = spla.cgs(matrix, vector)
     else:
-        solution = sp.linalg.solve(matrix, vector)
+        solution = sp.linalg.solve(matrix, vector, sym_pos=sym_pos)
     return solution

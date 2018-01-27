@@ -9,6 +9,8 @@ dependencies:
     - future
     - dask
     - matplotlib
+    - jupyter
+    - scikit-learn
     - pytest
     - pytest-cov
     - coverage
