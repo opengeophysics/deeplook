@@ -1,4 +1,4 @@
 numpy
 scipy
-future
+scikit-learn
 dask

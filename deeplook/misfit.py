@@ -30,7 +30,8 @@ class LinearMisfit():
     The linear least-squares data misfit function.
     """
 
-    def __init__(self, data, jacobian, weights=None, normalize=False):
+    def __init__(self, data, jacobian, weights=None, normalize=False,
+                 regularization=None):
         self.data = data
         self.normalize = normalize
         if normalize:
@@ -39,6 +40,9 @@ class LinearMisfit():
         if weights is None:
             weights = np.ones_like(data)
         self.weights = weights
+        if regularization is None:
+            regularization = []
+        self.regularization = regularization
 
     def minimize(self, method='linear'):
         """
@@ -51,7 +55,24 @@ class LinearMisfit():
             estimate *= self.scale_factor
         return estimate
 
-    def hessian(self):
+    def hessian(self, params=None):
+        hessian = (self.misfit_hessian(params) +
+                   sum(regul.hessian(params) for regul in self.regularization))
+        return hessian
+
+    def gradient(self, params):
+        gradient = (self.misfit_gradient(params) +
+                    sum(regul.gradient(params)
+                        for regul in self.regularization))
+        return gradient
+
+    def gradient_at_null(self):
+        gradient = (self.misfit_gradient_at_null() +
+                    sum(regul.gradient_at_null()
+                        for regul in self.regularization))
+        return gradient
+
+    def misfit_hessian(self, params=None):
         """
         The Hessian matrix.
         """
@@ -59,7 +80,7 @@ class LinearMisfit():
                              self.jacobian)
         return hessian
 
-    def gradient(self, params):
+    def misfit_gradient(self, params):
         """
         The gradient vector.
         """
@@ -68,7 +89,7 @@ class LinearMisfit():
                                residuals)
         return gradient
 
-    def gradient_at_null(self):
+    def misfit_gradient_at_null(self):
         """
         The gradient vector evaluated at the null vector.
         """

@@ -4,7 +4,8 @@ Main API.
 from ._version import get_versions as _get_versions
 
 from .misfit import LinearMisfit
-from .models import LinearModel
+from . import regularization
+from . import optimization
 
 
 # Get the version number through versioneer

@@ -6,7 +6,6 @@ dependencies:
     - pip
     - numpy
     - scipy
-    - future
     - dask
     - matplotlib
     - jupyter
