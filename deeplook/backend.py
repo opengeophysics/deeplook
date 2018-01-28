@@ -66,6 +66,9 @@ def dot(left, right):
     >>> # Mix in a sparse matrix
     >>> from scipy.sparse import diags
     >>> spmatrix = diags([4, 5], 0)
+    >>> spmatrix.toarray()
+    array([[4., 0.],
+           [0., 5.]])
     >>> spdot = dot(spmatrix, right)
     >>> spdot
     array([[12.,  0.],
@@ -76,7 +79,7 @@ def dot(left, right):
            [ 0., 10.]])
 
     """
-    if sp.sparse.issparse(right):
+    if sp.sparse.issparse(right) or sp.sparse.issparse(left):
         result = left*right
     else:
         result = left.dot(right)

@@ -12,7 +12,8 @@ class Damping():
         self.nparams = nparams
 
     def hessian(self, params=None):
-        return self.regul_param*2*scipy.sparse.identity(self.nparams).tocsr()
+        return self.regul_param*2*scipy.sparse.identity(self.nparams,
+                                                        format='csr')
 
     def gradient(self, params):
         return self.regul_param*2*params

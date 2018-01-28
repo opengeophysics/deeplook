@@ -2,6 +2,7 @@
 Define the data misfit classes
 """
 import numpy as np
+import scipy.sparse
 
 from . import backend as bknd
 
@@ -38,8 +39,9 @@ class LinearMisfit():
             jacobian, self.scale_factor = normalize_jacobian(jacobian)
         self.jacobian = jacobian
         if weights is None:
-            weights = np.ones_like(data)
-        self.weights = weights
+            self.weights = scipy.sparse.identity(data.size, format='csr')
+        else:
+            self.weights = scipy.sparse.diags(weights, 0, format='csr')
         if regularization is None:
             regularization = []
         self.regularization = regularization
@@ -76,7 +78,7 @@ class LinearMisfit():
         """
         The Hessian matrix.
         """
-        hessian = 2*bknd.dot(bknd.multiply(self.jacobian.T, self.weights),
+        hessian = 2*bknd.dot(bknd.dot(self.jacobian.T, self.weights),
                              self.jacobian)
         return hessian
 
@@ -85,7 +87,7 @@ class LinearMisfit():
         The gradient vector.
         """
         residuals = self.data - bknd.dot(self.jacobian, params)
-        gradient = -2*bknd.dot(bknd.multiply(self.jacobian.T, self.weights),
+        gradient = -2*bknd.dot(bknd.dot(self.jacobian.T, self.weights),
                                residuals)
         return gradient
 
@@ -93,6 +95,6 @@ class LinearMisfit():
         """
         The gradient vector evaluated at the null vector.
         """
-        gradient = -2*bknd.dot(bknd.multiply(self.jacobian.T, self.weights),
+        gradient = -2*bknd.dot(bknd.dot(self.jacobian.T, self.weights),
                                self.data)
         return gradient
