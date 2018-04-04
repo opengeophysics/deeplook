@@ -15,7 +15,7 @@ AUTHOR_EMAIL = 'leouieda@gmail.com'
 MAINTAINER = AUTHOR
 MAINTAINER_EMAIL = AUTHOR_EMAIL
 LICENSE = "BSD License"
-URL = "https://github.com/fatiando/deeplook"
+URL = "https://github.com/opengeophysics/deeplook"
 DESCRIPTION = "A Python framework for solving inverse problems"
 KEYWORDS = ''
 with open("README.rst") as f:
@@ -37,7 +37,6 @@ CLASSIFIERS = [
     "Intended Audience :: Education",
     "Topic :: Scientific/Engineering",
     "Topic :: Software Development :: Libraries",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "License :: OSI Approved :: {}".format(LICENSE),
