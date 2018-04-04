@@ -81,6 +81,9 @@ You can learn how from this *free* video series:
 
 General guidelines for Pull Requests:
 
+* **Before you start coding** open an issue or comment on an existing one to
+  let us know on what you are working. This will make sure that nobody else is
+  working on the same thing.
 * Each pull request should consist of a **small** and logical collection of
   changes.
   Larger changes should be broken down into smaller components and integrated
@@ -103,6 +106,47 @@ General guidelines for Pull Requests:
 * **If this is your first contribution**, be sure to add yourself to the
   [list of contributors](AUTHORS.md). We want to make sure we acknowledge the
   hard work you've generously contributed here.
+
+
+## Code Review
+
+Once you've submitted a Pull Request (PR), at this point you're waiting on us.
+You should expect to hear at least a comment within a couple of days.
+We may suggest some changes or improvements or alternatives.
+
+Some things that will increase the chance that your pull request is accepted
+quickly:
+
+* Write a good and detailed description of what the PR does.
+* Write tests for the code you wrote/modified.
+* Readable code is better than clever code (even with comments).
+* Write documentation for your code (docstrings) and leave comments explaining
+  the *reason* behind non-obvious things.
+* Follow the [PEP8](http://pep8.org) style guide for code and the [numpy
+  guide](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt)
+  for documentation.
+
+Pull requests will automatically have tests run by TravisCI.
+This includes running both the unit tests as well as the `flake8` and `pylint`
+code linters.
+Github will show the status of these checks on the pull request.
+Try to get them all passing (green).
+If you have any trouble, leave a comment asking for help.
+
+
+## Merging Pull Requests
+
+A project maintainer will merge your PR when you're done working on it, all
+tests pass, and there are no outstanding reviews.
+
+The merge should be done by **squashing and merging**.
+It's the maintainers job
+to write a good and thorough commit message based on the original PR
+description and subsequent discussion.
+This process avoids
+having commits in the history that break the build or have poorly written
+commit messages (it's hard to avoid those "Trying this and that" or "Fix typo"
+commits).
 
 
 ## Setup
@@ -162,32 +206,6 @@ You can preview the doc pages in your browser by running:
     make serve
 
 This will serve the docs at [http://127.0.0.1:8010](http://127.0.0.1:8010).
-
-
-## Code Review
-
-Once you've submitted a Pull Request (PR), at this point you're waiting on us.
-You should expect to hear at least a comment within a couple of days.
-We may suggest some changes or improvements or alternatives.
-
-Some things that will increase the chance that your pull request is accepted
-quickly:
-
-* Write a good and detailed description of what the PR does.
-* Write tests for the code you wrote/modified.
-* Readable code is better than clever code (even with comments).
-* Write documentation for your code (docstrings) and leave comments explaining
-  the *reason* behind non-obvious things.
-* Follow the [PEP8](http://pep8.org) style guide for code and the [numpy
-  guide](https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt)
-  for documentation.
-
-Pull requests will automatically have tests run by TravisCI.
-This includes running both the unit tests as well as the `flake8` and `pylint`
-code linters.
-Github will show the status of these checks on the pull request.
-Try to get them all passing (green).
-If you have any trouble, leave a comment asking for help.
 
 
 ## Testing your code
