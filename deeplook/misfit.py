@@ -1,7 +1,6 @@
 """
 Define the data misfit classes
 """
-import numpy as np
 import scipy.sparse
 
 from . import backend as bknd
@@ -18,7 +17,10 @@ def linear_solver(goal):
 
 
 def normalize_jacobian(jacobian):
-    # Normalize the Jacobian to the range [-1, 1] using a variable change
+    """
+    Normalize the Jacobian to the range [-1, 1] using a variable change
+    Helps keep the regularization parameter in a sane range.
+    """
     scale = 1/bknd.abs(jacobian).max(axis=0)
     # Element-wise multiplication with the diagonal of the scale matrix is the
     # same as A.dot(S)
@@ -58,23 +60,33 @@ class LinearMisfit():
         return estimate
 
     def hessian(self, params=None):
+        """
+        The goal function Hessian
+        """
         hessian = (self.misfit_hessian(params) +
                    sum(regul.hessian(params) for regul in self.regularization))
         return hessian
 
     def gradient(self, params):
+        """
+        The goal function gradient
+        """
         gradient = (self.misfit_gradient(params) +
                     sum(regul.gradient(params)
                         for regul in self.regularization))
         return gradient
 
     def gradient_at_null(self):
+        """
+        The goal function gradient at the null vector
+        Used in linear problems.
+        """
         gradient = (self.misfit_gradient_at_null() +
                     sum(regul.gradient_at_null()
                         for regul in self.regularization))
         return gradient
 
-    def misfit_hessian(self, params=None):
+    def misfit_hessian(self, params=None):  # pylint: disable=unused-argument
         """
         The Hessian matrix.
         """

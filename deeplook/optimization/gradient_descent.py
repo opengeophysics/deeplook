@@ -2,15 +2,12 @@
 """
 Gradient Descent optimization not found in in scipy.optimize.
 """
-from __future__ import division
 import math
-
-from future.builtins import object, range
 
 from .. import backend as bknd
 
 
-class StopConvergence(object):
+class StopConvergence():
     r"""
     Stop if the value of the goal function didn't change significantly.
 
@@ -67,7 +64,7 @@ class StopConvergence(object):
         return abs(new_value - old_value) < self.tol*(1 + abs(old_value))
 
 
-class StopSmallGradient(object):
+class StopSmallGradient():
     r"""
     Stop if the gradient norm is small.
 
@@ -161,7 +158,7 @@ def apply_preconditioning(gradient, hessian):
     return gradient, hessian
 
 
-class Newton(object):
+class Newton():
     r"""
     Minimize a scalar function using Newton's method.
 

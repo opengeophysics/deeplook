@@ -1,12 +1,10 @@
-# pylint: disable=redefined-builtin
+# pylint: disable=redefined-builtin,unexpected-keyword-arg
 """
 Linear algebra backend for numpy and scipy.sparse.
 
 Delegates to the correct library depending on data type and flags.
 Allows you to mix numpy arrays and scipy sparse matrices without extra effort.
 """
-from __future__ import division
-
 import numpy as np
 import scipy as sp
 import scipy.sparse.linalg as spla

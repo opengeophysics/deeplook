@@ -1,10 +1,7 @@
-# pylint: disable=redefined-outer-name,no-self-use
+# pylint: disable=redefined-outer-name,no-self-use,too-few-public-methods
 """
 Test the gradient descent optimization.
 """
-from __future__ import division
-from future.builtins import object
-
 import pytest
 import numpy as np
 import numpy.testing as npt
@@ -12,7 +9,7 @@ import numpy.testing as npt
 from ..optimization.gradient_descent import Newton, apply_preconditioning
 
 
-class Paraboloid(object):
+class Paraboloid():
     "An N-dimensional paraboloid function for minimization."
 
     def __call__(self, params):
