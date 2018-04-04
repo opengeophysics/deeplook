@@ -1,23 +1,36 @@
-engines:
-    duplication:
-        enabled: true
-        config:
-            languages:
-                - python
-    pep8:
-        enabled: false
-    fixme:
-        enabled: true
-    radon:
-        enabled: true
+version: "2"
 
-ratings:
-    paths:
-        - "**/*.py"
+checks:
+  file-lines:
+    enabled: false
+  similar-code:
+    enabled: false
+  method-lines:
+    enabled: false
+  argument-count:
+    config:
+      threshold: 10
+  method-complexity:
+    config:
+      threshold: 6
+
+plugins:
+  sonar-python:
+    enabled: true
+    config:
+      test_patterns:
+        - "deeplook/**/tests/*.py"
+    checks:
+      python:S3776:
+        enabled: false
+      python:S107:
+        enabled: false
+      python:S1542:
+        enabled: false
 
 exclude_paths:
-    - "versioneer.py"
-    - "deeplook/_version.py"
-    - "doc/**/*"
-    - "ci/*"
-    - "deeplook/tests/data/*"
+- "versioneer.py"
+- "deeplook/_version.py"
+- "doc/**/*"
+- "ci/*"
+- "deeplook/tests/data/*"

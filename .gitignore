@@ -7,6 +7,7 @@ dist/
 .*.swp
 .coverage
 .cache
+.pytest_cache/
 doc/_build
 doc/modules
 doc/api/deeplook*.rst
