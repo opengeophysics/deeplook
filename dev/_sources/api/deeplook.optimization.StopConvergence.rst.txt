@@ -1,0 +1,13 @@
+deeplook.optimization.StopConvergence
+=====================================
+
+.. currentmodule:: deeplook.optimization
+
+.. autoclass:: StopConvergence
+    :members:
+    :inherited-members:
+    :special-members: __call__
+
+.. raw:: html
+
+     <div style='clear:both'></div>

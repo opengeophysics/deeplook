@@ -1,0 +1,927 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    
+        <title>Solving a linear problem &mdash; Deeplook</title>
+    
+
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Deeplook" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href="index.html"><h2 class="sidebar-title">Deeplook</h2></a>
+
+    
+        
+        
+            <div class="version">
+                dev
+            </div>
+        
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">External links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CONTRIBUTING.md"><i class="fa fa-users fa-fw"></i> Contributing</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CODE_OF_CONDUCT.md"><i class="fa fa-gavel fa-fw"></i> Code of Conduct</a></li>
+            
+                <li class="toctree-l1"><a href="https://gitter.im/fatiando/deeplook"><i class="fa fa-comment fa-fw"></i> Contact</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Deeplook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Solving a linear problem</li>
+    
+    
+    <li class="source-link">
+        
+            
+                
+                
+                <a href="https://github.com/fatiando/deeplook/issues/new?title=Suggested%20improvement%20for%20linear_model&body=Please%20describe%20what%20could%20be%20improved%20about%20this%20page%20or%20the%20typo/mistake%20that%20you%20found%3A"
+                   class="fa fa-github"> Improve this page</a>
+            
+        
+        
+            <a href="https://github.com/fatiando/deeplook/raw/master/doc/linear_model.ipynb"
+               class="fa fa-download"> Download notebook</a>
+        
+    </li>
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Solving-a-linear-problem">
+<h1>Solving a linear problem<a class="headerlink" href="#Solving-a-linear-problem" title="Permalink to this headline">¶</a></h1>
+<p>Example of implementing a linear problem. We’ll use the biharmonic
+spline interpolation problem.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">KFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">deeplook</span> <span class="k">import</span> <span class="n">LinearMisfit</span>
+<span class="kn">from</span> <span class="nn">deeplook.regularization</span> <span class="k">import</span> <span class="n">Damping</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Polynomial-regression">
+<h2>Polynomial regression<a class="headerlink" href="#Polynomial-regression" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">make_data</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">10</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1000</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.01</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">600</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.03</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">make_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">ndata</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">x_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">ndata</span><span class="p">)</span>
+<span class="n">x_obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">ndata</span><span class="p">)</span>
+<span class="n">y_obs</span> <span class="o">=</span> <span class="n">make_data</span><span class="p">(</span><span class="n">x_obs</span><span class="p">)</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">ndata</span><span class="p">)</span>
+<span class="n">y_obs</span> <span class="o">+=</span> <span class="n">noise</span>
+<span class="n">y_obs</span><span class="p">[</span><span class="n">ndata</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">6000</span>
+<span class="n">y_error</span> <span class="o">=</span> <span class="n">std</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">y_obs</span><span class="p">)</span>
+<span class="n">y_error</span><span class="p">[</span><span class="n">ndata</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&lt;matplotlib.lines.Line2D at 0x7fbc9c289320&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_5_1.png" src="_images/linear_model_5_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">PolynomialRegression</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="n">degree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="o">=</span> <span class="n">damping</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">nparams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">ndata</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ndata</span><span class="p">,</span> <span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nparams</span><span class="p">):</span>
+            <span class="n">jac</span><span class="p">[:,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="n">col</span>
+        <span class="k">return</span> <span class="n">jac</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">jacobian</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">regul</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">regul</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Damping</span><span class="p">(</span><span class="n">regul_param</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">damping</span><span class="p">,</span>
+                                 <span class="n">nparams</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misfit</span> <span class="o">=</span> <span class="n">LinearMisfit</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jacobian</span><span class="o">=</span><span class="n">jacobian</span><span class="p">,</span>
+                                   <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">regularization</span><span class="o">=</span><span class="n">regul</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misfit</span><span class="o">.</span><span class="n">minimize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialRegression</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">params_</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--g&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 6.02068021e+03  1.39505367e+01 -3.11621125e-01  2.20627682e-04
+  5.99677863e-06 -7.74569617e-09 -4.71150692e-11  8.27679579e-14
+  1.43812885e-16 -3.67779988e-19 -2.59734599e-23  5.70598650e-25
+ -4.33606500e-28  4.37039184e-32  3.54215142e-35]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_7_1.png" src="_images/linear_model_7_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">y_error</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">weights</span> <span class="o">/=</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">poly_w</span> <span class="o">=</span> <span class="n">PolynomialRegression</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly_w</span><span class="o">.</span><span class="n">params_</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">poly_w</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;-r&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--g&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 1.98112107e+03  1.16326390e+01 -5.28955790e-02  1.86611219e-04
+  9.52564579e-07 -3.44968746e-09 -7.16690260e-12  2.12311601e-14
+  2.62669015e-17 -6.38477530e-20 -5.27785979e-23  1.16785353e-25
+  4.16625964e-29 -1.32127796e-31  5.23326887e-35]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_8_1.png" src="_images/linear_model_8_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">PolynomialRegressionCV</span><span class="p">(</span><span class="n">PolynomialRegression</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">folds</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">):</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialRegression</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="n">poly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">test</span><span class="p">]),</span>
+                                            <span class="n">sample_weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="n">test</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span><span class="o">/</span><span class="n">folds</span><span class="o">.</span><span class="n">n_splits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">poly_cv</span> <span class="o">=</span> <span class="n">PolynomialRegressionCV</span><span class="p">(</span><span class="n">degrees</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">)),</span>
+                                 <span class="n">random_state</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly_cv</span><span class="o">.</span><span class="n">params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly_cv</span><span class="o">.</span><span class="n">degree</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">poly_cv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;-r&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">poly_cv</span><span class="o">.</span><span class="n">degrees</span><span class="p">,</span> <span class="n">poly_cv</span><span class="o">.</span><span class="n">scores</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 1.65476099e+03  1.80165816e+01 -2.29719438e-02 -8.64609633e-05
+  1.97599055e-07  1.42917698e-10 -4.60033341e-13  2.18875502e-16]
+7
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_10_1.png" src="_images/linear_model_10_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Biharmonic-spline">
+<h2>Biharmonic spline<a class="headerlink" href="#Biharmonic-spline" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">BiharmonicSpline1D</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_forces</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="o">=</span> <span class="n">damping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span> <span class="o">=</span> <span class="n">x_forces</span>
+
+    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">ndata</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">nparams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">jac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ndata</span><span class="p">,</span> <span class="n">nparams</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndata</span><span class="p">):</span>
+            <span class="n">jac</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+        <span class="k">return</span> <span class="n">jac</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">nparams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">jacobian</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">regul</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">regul</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Damping</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">damping</span><span class="p">,</span> <span class="n">nparams</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misfit</span> <span class="o">=</span> <span class="n">LinearMisfit</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">jacobian</span><span class="o">=</span><span class="n">jacobian</span><span class="p">,</span>
+                                   <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+                                   <span class="n">regularization</span><span class="o">=</span><span class="n">regul</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">misfit</span><span class="o">.</span><span class="n">minimize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">spline</span> <span class="o">=</span> <span class="n">BiharmonicSpline1D</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/leo/miniconda3/envs/deeplook/lib/python3.6/site-packages/scipy/linalg/basic.py:40: RuntimeWarning: scipy.linalg.solve
+Ill-conditioned matrix detected. Result is not guaranteed to be accurate.
+Reciprocal condition number/precision: 1.0390575379584219e-17 / 1.1102230246251565e-16
+  RuntimeWarning)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_13_1.png" src="_images/linear_model_13_1.png" />
+</div>
+</div>
+<p>Splines go a bit crazy when the points aren’t evenly spaced.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">y_error</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">weights</span> <span class="o">/=</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">spline_w</span> <span class="o">=</span> <span class="n">BiharmonicSpline1D</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spline_w</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;-r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/leo/miniconda3/envs/deeplook/lib/python3.6/site-packages/scipy/linalg/basic.py:40: RuntimeWarning: scipy.linalg.solve
+Ill-conditioned matrix detected. Result is not guaranteed to be accurate.
+Reciprocal condition number/precision: 1.57870294315431e-17 / 1.1102230246251565e-16
+  RuntimeWarning)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_15_1.png" src="_images/linear_model_15_1.png" />
+</div>
+</div>
+<p>Weights don’t work when using forces beneath the data. The sensitivity
+of the force right under the data is 0. Use evenly spaced forces and
+KFold CV to find the best number.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">BiharmonicSpline1DCV</span><span class="p">(</span><span class="n">BiharmonicSpline1D</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmin</span> <span class="o">=</span> <span class="n">xmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span> <span class="o">=</span> <span class="n">xmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forces</span> <span class="o">=</span> <span class="n">forces</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">folds</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nforces</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">):</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">x_forces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="n">nforces</span><span class="p">)</span>
+            <span class="n">spline</span> <span class="o">=</span> <span class="n">BiharmonicSpline1D</span><span class="p">(</span><span class="n">x_forces</span><span class="o">=</span><span class="n">x_forces</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">folds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="n">spline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">spline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">test</span><span class="p">]),</span>
+                                            <span class="n">sample_weight</span><span class="o">=</span><span class="n">weights</span><span class="p">[</span><span class="n">test</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span><span class="o">/</span><span class="n">folds</span><span class="o">.</span><span class="n">n_splits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nforces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scores</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_forces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nforces</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">x_obs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">xmax</span><span class="o">=</span><span class="n">x_obs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+            <span class="n">forces</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x_obs</span><span class="o">.</span><span class="n">size</span><span class="o">//</span><span class="mi">2</span><span class="p">)),</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">spline_cv</span> <span class="o">=</span> <span class="n">BiharmonicSpline1DCV</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">)</span>
+<span class="n">spline_cv_w</span> <span class="o">=</span> <span class="n">BiharmonicSpline1DCV</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spline_cv</span><span class="o">.</span><span class="n">nforces</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spline_cv_w</span><span class="o">.</span><span class="n">nforces</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x_obs</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_error</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spline_cv_w</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;-r&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spline_cv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--g&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;--b&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spline_cv</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">spline_cv</span><span class="o">.</span><span class="n">scores</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spline_cv_w</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">spline_cv_w</span><span class="o">.</span><span class="n">scores</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6
+7
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/linear_model_18_1.png" src="_images/linear_model_18_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Leonardo Uieda.
+      Last updated on Apr 04, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

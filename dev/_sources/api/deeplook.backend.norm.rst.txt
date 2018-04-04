@@ -1,0 +1,11 @@
+deeplook.backend.norm
+=====================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: norm
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>

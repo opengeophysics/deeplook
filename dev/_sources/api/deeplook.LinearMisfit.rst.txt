@@ -1,0 +1,13 @@
+deeplook.LinearMisfit
+=====================
+
+.. currentmodule:: deeplook
+
+.. autoclass:: LinearMisfit
+    :members:
+    :inherited-members:
+    :special-members: __call__
+
+.. raw:: html
+
+     <div style='clear:both'></div>

@@ -1,0 +1,11 @@
+deeplook.backend.fudge
+======================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: fudge
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>

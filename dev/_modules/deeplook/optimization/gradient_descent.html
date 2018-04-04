@@ -1,0 +1,529 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    
+        <title>deeplook.optimization.gradient_descent &mdash; Deeplook</title>
+    
+
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Deeplook" href="../../../index.html"/>
+        <link rel="up" title="deeplook" href="../../deeplook.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+    <a href="../../../index.html"><h2 class="sidebar-title">Deeplook</h2></a>
+
+    
+        
+        
+            <div class="version">
+                dev
+            </div>
+        
+    
+
+    
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">External links</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CONTRIBUTING.md"><i class="fa fa-users fa-fw"></i> Contributing</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook/blob/master/CODE_OF_CONDUCT.md"><i class="fa fa-gavel fa-fw"></i> Code of Conduct</a></li>
+            
+                <li class="toctree-l1"><a href="https://gitter.im/fatiando/deeplook"><i class="fa fa-comment fa-fw"></i> Contact</a></li>
+            
+                <li class="toctree-l1"><a href="https://github.com/fatiando/deeplook"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Deeplook</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../deeplook.html">deeplook</a> &raquo;</li>
+        
+      <li>deeplook.optimization.gradient_descent</li>
+    
+    
+    <li class="source-link">
+        
+        
+    </li>
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deeplook.optimization.gradient_descent</h1><div class="highlight"><pre>
+<span></span><span class="c1"># pylint: disable=too-few-public-methods</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Gradient Descent optimization not found in in scipy.optimize.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">bknd</span>
+
+
+<div class="viewcode-block" id="StopConvergence"><a class="viewcode-back" href="../../../api/deeplook.optimization.StopConvergence.html#deeplook.optimization.StopConvergence">[docs]</a><span class="k">class</span> <span class="nc">StopConvergence</span><span class="p">():</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stop if the value of the goal function didn&#39;t change significantly.</span>
+
+<span class="sd">    Checks the following inequality (equation 9.49 in [Aster2012]_):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        |f(\mathbf{p}^{k+1}) - f(\mathbf{p}^k)|</span>
+<span class="sd">        &lt; \epsilon (1 + |f(\mathbf{p}^k)|)</span>
+
+<span class="sd">    in which :math:`f` is the goal function, :math:`\mathbf{p}` is the</span>
+<span class="sd">    parameter vector, and :math:`\epsilon` is a tolerance parameter. A good</span>
+<span class="sd">    choice of tolerance is the accuracy of gradient computations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * tol : float</span>
+<span class="sd">        The tolerance parameter :math:`\epsilon`. Must be a positive scalar.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; conv = StopConvergence(tol=1e-2)</span>
+<span class="sd">    &gt;&gt;&gt; conv(new_value=1, old_value=0.99, old_gradient=None)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; conv(new_value=1, old_value=0.95, old_gradient=None)</span>
+<span class="sd">    False</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+
+<div class="viewcode-block" id="StopConvergence.__call__"><a class="viewcode-back" href="../../../api/deeplook.optimization.StopConvergence.html#deeplook.optimization.StopConvergence.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">old_gradient</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the goal function value changed significantly.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        * new_value : int</span>
+<span class="sd">            The new value of the goal function :math:`f(\mathbf{p}^{k+1})`.</span>
+<span class="sd">        * old_value : int</span>
+<span class="sd">            The previous value of the goal function :math:`f(\mathbf{p}^k)`.</span>
+<span class="sd">        * old_gradient : None</span>
+<span class="sd">            Required by the API but ignored on this method. Use ``None``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        * stop : bool</span>
+<span class="sd">            Whether or not the optimization should stop based on this</span>
+<span class="sd">            criterium.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new_value</span> <span class="o">-</span> <span class="n">old_value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">old_value</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="StopSmallGradient"><a class="viewcode-back" href="../../../api/deeplook.optimization.StopSmallGradient.html#deeplook.optimization.StopSmallGradient">[docs]</a><span class="k">class</span> <span class="nc">StopSmallGradient</span><span class="p">():</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stop if the gradient norm is small.</span>
+
+<span class="sd">    Checks the following inequality (equation 9.47 in [Aster2012]_):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \|\nabla f(\mathbf{p}^k)\|_2</span>
+<span class="sd">        &lt; \sqrt\epsilon (1 + |f(\mathbf{p}^k)|)</span>
+
+<span class="sd">    in which :math:`f` is the goal function, :math:`\nabla` is the gradient</span>
+<span class="sd">    operator, :math:`\mathbf{p}` is the parameter vector, and :math:`\epsilon`</span>
+<span class="sd">    is a tolerance parameter. A good choice of tolerance is the accuracy of</span>
+<span class="sd">    gradient computations.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * tol : float</span>
+<span class="sd">        The tolerance parameter :math:`\epsilon`. Must be a positive scalar.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; conv = StopSmallGradient(tol=1e-2)</span>
+<span class="sd">    &gt;&gt;&gt; conv(new_value=None, old_value=1, old_gradient=np.array([0.1, 0.1]))</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; conv(new_value=None, old_value=1, old_gradient=np.array([1, 1]))</span>
+<span class="sd">    False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+
+<div class="viewcode-block" id="StopSmallGradient.__call__"><a class="viewcode-back" href="../../../api/deeplook.optimization.StopSmallGradient.html#deeplook.optimization.StopSmallGradient.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">old_gradient</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the gradient of the goal function is small.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        * new_value : int</span>
+<span class="sd">            The new value of the goal function :math:`f(\mathbf{p}^{k+1})`. Not</span>
+<span class="sd">            required.</span>
+<span class="sd">        * old_value : int</span>
+<span class="sd">            The previous value of the goal function :math:`f(\mathbf{p}^k)`.</span>
+<span class="sd">        * old_gradient : None</span>
+<span class="sd">            The gradient vector of the goal function :math:`\nabla</span>
+<span class="sd">            f(\mathbf{p}^k)`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        * stop : bool</span>
+<span class="sd">            Whether or not the optimization should stop based on this</span>
+<span class="sd">            criterium.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">bknd</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">old_gradient</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grad_norm</span> <span class="o">&lt;</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">old_value</span><span class="p">))</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">apply_preconditioning</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply Jacobi (diagonal) preconditioning to the Hessian and gradient.</span>
+
+<span class="sd">    The preconditioner :math:`\mathbf{P}` is the diagonal of the Hessian</span>
+<span class="sd">    matrix. This transformation pre-multiplies (dot) the Hessian and gradient</span>
+<span class="sd">    by :math:`\mathbf{P}^{-1}`. A fudge factor is applied to the diagonal to</span>
+<span class="sd">    avoid very small values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gradient : 1d array</span>
+<span class="sd">        The gradient vector.</span>
+<span class="sd">    hessian  : 2d array</span>
+<span class="sd">        The Hessian matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gradient, hessian : arrays</span>
+<span class="sd">        The gradient and Hessian after preconditioning.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">diag</span> <span class="o">=</span> <span class="n">bknd</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">bknd</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">hessian</span><span class="p">))</span>
+    <span class="n">bknd</span><span class="o">.</span><span class="n">fudge</span><span class="p">(</span><span class="n">diag</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
+    <span class="c1"># This is the diagonal of the preconditioning matrix</span>
+    <span class="n">preconditioner</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">diag</span>
+    <span class="c1"># Doing element-wise multiplication with the diagonal like this is</span>
+    <span class="c1"># equivalent to the dot product with the full matrix</span>
+    <span class="n">hessian</span> <span class="o">=</span> <span class="n">bknd</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">preconditioner</span><span class="p">,</span> <span class="n">hessian</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">bknd</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">preconditioner</span><span class="p">,</span> <span class="n">gradient</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span>
+
+
+<div class="viewcode-block" id="Newton"><a class="viewcode-back" href="../../../api/deeplook.optimization.Newton.html#deeplook.optimization.Newton">[docs]</a><span class="k">class</span> <span class="nc">Newton</span><span class="p">():</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Minimize a scalar function using Newton&#39;s method.</span>
+
+<span class="sd">    Given a goal function :math:`\Gamma(\mathbf{p})`, minimize it iteratively</span>
+<span class="sd">    by successively adding steps :math:`\Delta\mathbf{p}^k` to a starting</span>
+<span class="sd">    estimate :math:`\mathbf{p}^0`. A step is calculated by solving the linear</span>
+<span class="sd">    system:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \mathbf{H}(\mathbf{p}^k)\Delta\mathbf{p}^k =</span>
+<span class="sd">        -\nabla \Gamma(\mathbf{p}^k)</span>
+
+<span class="sd">    in which :math:`\mathbf{H}(\mathbf{p}^k)` is the Hessian matrix and</span>
+<span class="sd">    :math:`\nabla\Gamma(\mathbf{p}^k)` is the gradient vector of the goal</span>
+<span class="sd">    function, both evaluated at iteration k.</span>
+
+<span class="sd">    The iterations stop when the maximum number of iterations is reached or</span>
+<span class="sd">    when the stopping criteria are fulfilled. The default stopping criteria are</span>
+<span class="sd">    :class:`~deeplook.optimization.StopConvergence` and</span>
+<span class="sd">    :class:`~deeplook.optimization.StopSmallGradient`. You can replace the</span>
+<span class="sd">    defaults by assigning a list of stopping criteria to the</span>
+<span class="sd">    ``stopping_criteria`` attribute.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    * initial : 1d array</span>
+<span class="sd">        Initial estimate of the parameter vector.</span>
+<span class="sd">    * precondition : bool</span>
+<span class="sd">        If ``True``, will apply Jacobi preconditioning (recommended).</span>
+<span class="sd">    * maxit : int</span>
+<span class="sd">        The maximum number of iterations.</span>
+<span class="sd">    * tol : float</span>
+<span class="sd">        The tolerance parameter for the stopping criteria. Use the precision of</span>
+<span class="sd">        the gradient computations (see equation 9.47 in [Aster2012]_).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">precondition</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">initial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxit</span> <span class="o">=</span> <span class="n">maxit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precondition</span> <span class="o">=</span> <span class="n">precondition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criteria</span> <span class="o">=</span> <span class="p">[</span><span class="n">StopSmallGradient</span><span class="p">(</span><span class="n">tol</span><span class="p">),</span> <span class="n">StopConvergence</span><span class="p">(</span><span class="n">tol</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Newton.step"><a class="viewcode-back" href="../../../api/deeplook.optimization.Newton.html#deeplook.optimization.Newton.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the parameter vector by taking a step in Newton&#39;s method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        * goal : goal function object</span>
+<span class="sd">            The goal function that will be minimized.</span>
+<span class="sd">        * params : 1d array</span>
+<span class="sd">            The parameter vector at the last iteration of the algorithm.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        * new_params : 1d array</span>
+<span class="sd">            The updated parameter vector.</span>
+<span class="sd">        * gradient : 1d array</span>
+<span class="sd">            The gradient vector of the goal function evaluated at the given</span>
+<span class="sd">            *params*. Useful for convergence analysis.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span> <span class="o">=</span> <span class="n">goal</span><span class="o">.</span><span class="n">derivatives</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">include_hessian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">precondition</span><span class="p">:</span>
+            <span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span> <span class="o">=</span> <span class="n">apply_preconditioning</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">hessian</span><span class="p">)</span>
+        <span class="n">new_params</span> <span class="o">=</span> <span class="n">params</span> <span class="o">+</span> <span class="n">bknd</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">hessian</span><span class="p">,</span> <span class="o">-</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_params</span><span class="p">,</span> <span class="n">gradient</span></div>
+
+    <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">old_gradient</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate the stopping criteria.</span>
+
+<span class="sd">        Will be ``True`` is all stopping criteria are ``True``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        * new_value, old_value : float</span>
+<span class="sd">            The values of the goal function after and before the last step.</span>
+<span class="sd">        * old_gradient : 1d array</span>
+<span class="sd">            The value of the gradient vector of the goal function before the</span>
+<span class="sd">            last step.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        * stop : bool</span>
+<span class="sd">            If ``True``, stop the iterations.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">criterium</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">old_gradient</span><span class="p">)</span>
+                   <span class="k">for</span> <span class="n">criterium</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criteria</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Newton.__call__"><a class="viewcode-back" href="../../../api/deeplook.optimization.Newton.html#deeplook.optimization.Newton.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Minimize the given goal function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        * goal : goal function object</span>
+<span class="sd">            The object must provide a gradient and a Hessian matrix through the</span>
+<span class="sd">            ``derivatives`` method. See the documentation for more information.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        * params : 1d array</span>
+<span class="sd">            The parameter vector that minimized the function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">goal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">)]</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxit</span><span class="p">):</span>
+            <span class="n">params</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">goal</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">gradient</span><span class="p">):</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">params</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Leonardo Uieda.
+      Last updated on Apr 04, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

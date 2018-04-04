@@ -1,0 +1,11 @@
+deeplook.backend.solve
+======================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: solve
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>

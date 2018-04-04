@@ -1,0 +1,13 @@
+deeplook.optimization.StopSmallGradient
+=======================================
+
+.. currentmodule:: deeplook.optimization
+
+.. autoclass:: StopSmallGradient
+    :members:
+    :inherited-members:
+    :special-members: __call__
+
+.. raw:: html
+
+     <div style='clear:both'></div>

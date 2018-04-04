@@ -1,0 +1,11 @@
+deeplook.backend.diagonal
+=========================
+
+.. currentmodule:: deeplook.backend
+
+.. autofunction:: diagonal
+
+
+.. raw:: html
+
+     <div style='clear:both'></div>

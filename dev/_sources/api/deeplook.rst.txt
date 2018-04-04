@@ -1,0 +1,37 @@
+``deeplook``
+-----------------------
+
+.. raw:: html
+
+    <hr>
+
+.. automodule:: deeplook
+
+
+
+.. rubric:: Classes
+
+.. autosummary::
+  :toctree: ./
+
+  LinearMisfit
+
+
+
+
+
+
+
+.. rubric:: Functions
+
+.. autosummary::
+  :toctree: ./
+
+  test
+
+
+
+
+
+
+

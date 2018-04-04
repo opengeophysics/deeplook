@@ -1,0 +1,13 @@
+deeplook.optimization.Newton
+============================
+
+.. currentmodule:: deeplook.optimization
+
+.. autoclass:: Newton
+    :members:
+    :inherited-members:
+    :special-members: __call__
+
+.. raw:: html
+
+     <div style='clear:both'></div>
