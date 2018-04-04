@@ -3,32 +3,29 @@ Deeplook
 
 **A Python framework for solving inverse problems.**
 
-`Documentation <http://www.fatiando.org/deeplook>`_ |
-`Install <http://www.fatiando.org/deeplook/install.html>`_ |
-`API <http://www.fatiando.org/deeplook/api>`_ |
-`Contact <https://gitter.im/fatiando/deeplook>`_
+`Documentation <https://opengeophysics.github.io/deeplook>`_ |
+`Install <https://opengeophysics.github.io/deeplook/install.html>`_ |
+`API <https://opengeophysics.github.io/deeplook/api>`_
+`Contact <https://gitter.im/opengeophysics>`_
 
 .. image:: http://img.shields.io/pypi/v/deeplook.svg?style=flat-square
     :alt: Latest version on PyPI
     :target: https://pypi.python.org/pypi/deeplook
-.. image:: http://img.shields.io/travis/fatiando/deeplook/master.svg?style=flat-square&label=linux|osx
+.. image:: http://img.shields.io/travis/opengeophysics/deeplook/master.svg?style=flat-square&label=tests
     :alt: Travis CI build status
-    :target: https://travis-ci.org/fatiando/deeplook
-.. image:: https://img.shields.io/codecov/c/github/fatiando/deeplook/master.svg?style=flat-square
+    :target: https://travis-ci.org/opengeophysics/deeplook
+.. image:: https://img.shields.io/codecov/c/github/opengeophysics/deeplook/master.svg?style=flat-square
     :alt: Test coverage status
-    :target: https://codecov.io/gh/fatiando/deeplook
-.. image:: https://img.shields.io/codeclimate/maintainability/fatiando/deeplook.svg?style=flat-square
+    :target: https://codecov.io/gh/opengeophysics/deeplook
+.. image:: https://img.shields.io/codeclimate/maintainability/opengeophysics/deeplook.svg?style=flat-square
     :alt: Code quality status
-    :target: https://codeclimate.com/github/fatiando/deeplook
+    :target: https://codeclimate.com/github/opengeophysics/deeplook
 .. image:: https://img.shields.io/codacy/grade/e73169dcb8454b3bb0f6cc5389b228b4.svg?style=flat-square&label=codacy
     :alt: Code quality grade on codacy
     :target: https://www.codacy.com/app/leouieda/deeplook
-.. image:: https://img.shields.io/pypi/pyversions/deeplook.svg?style=flat-square
-    :alt: Compatible Python versions.
-    :target: https://pypi.python.org/pypi/deeplook
-.. image:: https://img.shields.io/gitter/room/fatiando/deeplook.svg?style=flat-square
+.. image:: https://img.shields.io/gitter/room/opengeophysics.svg?style=flat-square
     :alt: Chat room on Gitter
-    :target: https://gitter.im/fatiando/deeplook
+    :target: https://gitter.im/opengeophysics
 
 
 Disclaimer
@@ -36,26 +33,35 @@ Disclaimer
 
 **This package in early stages of design and implementation.**
 
-We welcome any feedback and ideas!
+We are at the stage of defining the design and goals of the project.
+We welcome any ideas and participation from the community!
 Let us know by submitting
-`issues on Github <https://github.com/fatiando/deeplook/issues>`__
+`issues on Github <https://github.com/opengeophysics/deeplook/issues>`__
 or send us a message on our
-`Gitter chatroom <https://gitter.im/fatiando/deeplook>`__.
+`Gitter chatroom <https://gitter.im/opengeophysics>`__.
 
 
 Project goals
 -------------
 
+* Provide APIs on two levels: a high-level scikit-learn like API for users of
+  inversions and lower-level API for developers of inversions.
+* Python 3 from the start.
+* Agnostic of the forward operator calculation.
+* Provide tools to automate as much as possible (finite-difference derivatives,
+  goal function normalization, etc).
+* Flexible low-level API that allows complete customization of the inversion
+  process.
 
 
 Contacting Us
 -------------
 
-* Most discussion happens `on Github <https://github.com/fatiando/deeplook>`__.
+* Most discussion happens `on Github <https://github.com/opengeophysics/deeplook>`__.
   Feel free to `open an issue
-  <https://github.com/fatiando/deeplook/issues/new>`__ or comment
+  <https://github.com/opengeophysics/deeplook/issues/new>`__ or comment
   on any open issue or pull request.
-* We have `chat room on Gitter <https://gitter.im/fatiando/deeplook>`__
+* We have `chat room on Gitter <https://gitter.im/opengeophysics/>`__
   where you can ask questions and leave comments.
 
 
@@ -66,14 +72,14 @@ Code of conduct
 +++++++++++++++
 
 Please note that this project is released with a
-`Contributor Code of Conduct <https://github.com/fatiando/deeplook/blob/master/CODE_OF_CONDUCT.md>`__.
+`Contributor Code of Conduct <https://github.com/opengeophysics/deeplook/blob/master/CODE_OF_CONDUCT.md>`__.
 By participating in this project you agree to abide by its terms.
 
 Contributing Guidelines
 +++++++++++++++++++++++
 
 Please read our
-`Contributing Guide <https://github.com/fatiando/deeplook/blob/master/CONTRIBUTING.md>`__
+`Contributing Guide <https://github.com/opengeophysics/deeplook/blob/master/CONTRIBUTING.md>`__
 to see how you can help and give feedback.
 
 Imposter syndrome disclaimer
@@ -107,6 +113,9 @@ That's how we all improve and we are happy to help others learn.
 Related projects
 ----------------
 
+* [Fatiando a Terra](http://www.fatiando.org)
+* [SimPEG](http://simpeg.xyz/)
+* [pyGMILi](https://www.pygimli.org/)
 
 
 License
